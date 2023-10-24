@@ -1,7 +1,7 @@
 const express = require('express');
 // const bodyParser = require('body-parser')
 const admin = require("firebase-admin");
-const serviceAccount = require("./firebase.json");
+const serviceAccount = require("./secrets/firebase.json");
 
 const app = express();
 const PORT = 3000;
@@ -22,10 +22,12 @@ const registrationTokens = [
 const messageTemplate = {
     tokens: registrationTokens,
     notification: {
-        title: "🚰 Thirsty Plant 🪴",
-        body: "Please water XYZ",
-        click_action: 'https://prometheus.apps.microshift.is-in-the.cloud'
+        title: "🚰 Thirsty Plant 🌻",
+        body: "Please water XYZ"
     },
+    fcm_options: {
+        link: 'https://prometheus.apps.microshift.is-in-the.cloud'
+    }
  };
 
 app.use(express.json()); //Used to parse JSON bodies
@@ -38,7 +40,7 @@ app.post('/sendalert', (req, res) => {
     // req.body
     console.info('Alert received ::' , req.body)
     console.info('Sending message to FCM ::' , messageTemplate)
-    admin.messaging().sendMulticast(messageTemplate)
+    admin.messaging().sendEachForMulticast(messageTemplate)
     .then((response) => {
         // Response is a message ID string.
         console.log('Successfully sent message:', response);
