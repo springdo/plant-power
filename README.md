@@ -17,3 +17,23 @@ $ npm run start
 # generate static project
 $ npm run generate
 ```
+
+## OCP Deploy steps:
+1. Build the Frontend 
+```bash
+npm run build
+```
+
+2. Build server & add Front end to container
+```bash
+podman build -t quay.io/springdo/plant-power:latest --arch=amd64 . 
+```
+
+3. push to registry 
+```bash
+podman login quay.io -u springdo
+podman push quay.io/springdo/plant-power:latest
+```
+
+4. On ocp 
+``

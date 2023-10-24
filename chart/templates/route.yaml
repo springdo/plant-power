@@ -3,9 +3,9 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: {{ include "todolist.fullname" . }}
+  name: {{ include "plant-power.fullname" . }}
   labels:
-    {{- include "todolist.labels" . | nindent 4 }}
+    {{- include "plant-power.labels" . | nindent 4 }}
   annotations:
     haproxy.router.openshift.io/balance: "roundrobin"
 spec:
@@ -13,7 +13,7 @@ spec:
     targetPort: 80
   to:
     kind: Service
-    name: {{ include "todolist.fullname" . }}
+    name: {{ include "plant-power.fullname" . }}
     weight: 100
   tls:
     insecureEdgeTerminationPolicy: Redirect
