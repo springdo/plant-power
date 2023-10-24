@@ -6,7 +6,7 @@ replicaCount: 5
 
 image:
   repository: quay.io/springdo/plant-power
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
 
