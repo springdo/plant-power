@@ -19,12 +19,6 @@ spec:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
   wildcardPolicy: None
-  {{- if .Values.a_b_deploy.svc_name }}
-  alternateBackends:
-  - kind: Service
-    name: {{ .Values.a_b_deploy.svc_name }}
-    weight: {{ .Values.a_b_deploy.weight }}
-  {{- end }}
 status:
   ingress:
   - conditions:
