@@ -7,7 +7,7 @@
     <br/><br/>
     <p>👨‍💻 ++++ Dev Stuff ++++ 🤓</p>
     <p>Device token is 
-      <span> {{ idToken }} </span>
+      <pre> {{ idToken }} </pre>
     </p>
     <pre>{{ message }}</pre>
   </div>
@@ -85,5 +85,9 @@ export default {
 img {
   width: 100%;
   height: auto;
+}
+
+pre {
+ white-space: pre-wrap;
 }
 </style>
