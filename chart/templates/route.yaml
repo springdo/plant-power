@@ -9,8 +9,9 @@ metadata:
   annotations:
     haproxy.router.openshift.io/balance: "roundrobin"
 spec:
+  host: plant-power.{{ .Values.domain }}
   port:
-    targetPort: 80
+    targetPort: http
   to:
     kind: Service
     name: {{ include "plant-power.fullname" . }}
