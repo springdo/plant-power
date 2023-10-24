@@ -36,12 +36,10 @@ spec:
             - containerPort: 3000
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /hello
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /hello
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
