@@ -1,0 +1,19 @@
+FROM registry.access.redhat.com/ubi8/nodejs-18
+
+WORKDIR /opt/app-root/src
+
+COPY package.json /usr/src/app/
+RUN npm install --omit=dev
+
+# creating an inline package.json for speed and laziness:)
+RUN npm i express@4 --save
+# USER root
+# RUN npm i protobufjs --save --verbose --unsafe-perm
+# USER default
+RUN npm i firebase-admin@10.3.0 --save --verbose --unsafe-perm
+
+COPY server.js /usr/app
+
+EXPOSE 3000
+
+CMD node server.js

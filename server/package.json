@@ -1,0 +1,11 @@
+{
+  "name": "plant-server",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "firebase-admin": "^11.11.0"
+  }
+}
