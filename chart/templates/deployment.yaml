@@ -31,15 +31,15 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 3000
+            - containerPort: {{ .Values.containerPort }}
           livenessProbe:
             httpGet:
               path: /hello
-              port: 3000
+              port: {{ .Values.containerPort }}
           readinessProbe:
             httpGet:
               path: /hello
-              port: 3000
+              port: {{ .Values.containerPort }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
