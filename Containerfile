@@ -4,10 +4,10 @@ WORKDIR /opt/app-root/src
 
 RUN npm i express@4 --save
 
-COPY server.js /usr/app
+COPY server.js /opt/app-root/src
 
 EXPOSE 3000
 
-COPY dist /usr/app/public
+COPY dist /opt/app-root/src/public
 
 CMD node server.js

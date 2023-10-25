@@ -2,7 +2,7 @@ FROM registry.access.redhat.com/ubi8/nodejs-18
 
 WORKDIR /opt/app-root/src
 
-COPY package.json /usr/src/app/
+COPY package.json /opt/app-root/src/
 RUN npm install --omit=dev
 
 # creating an inline package.json for speed and laziness:)
@@ -12,7 +12,7 @@ RUN npm i express@4 --save
 # USER default
 RUN npm i firebase-admin@10.3.0 --save --verbose --unsafe-perm
 
-COPY server.js /usr/app
+COPY server.js /opt/app-root/src/
 
 EXPOSE 3000
 
