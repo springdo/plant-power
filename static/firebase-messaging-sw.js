@@ -18,6 +18,8 @@ firebase.initializeApp({
 // Retrieve firebase messaging
 const messaging = firebase.messaging();
 
+
+
 messaging.onBackgroundMessage(function (payload) {
   console.log('Firebase SW: Received background message ', payload);
 
@@ -30,8 +32,36 @@ messaging.onBackgroundMessage(function (payload) {
   const notificationTitle = payload.data.title;
   const notificationOptions = {
     body: payload.data.body,
-    icon: payload.data.icon
+    actions: [{
+      action: 'OPEN_PROM',
+      title: 'Prometheus'
+    },{
+      action: 'OPEN_GRAFANA',
+      title: 'Grafana'
+    }],
+    icon: './flower-icon.png',
+    badge: 'https://plant-power.apps.microshift.is-in-the.cloud/plant.png',
+    vibrate: [200, 100, 200, 100, 200, 100, 200],
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
+
+
+  self.addEventListener( "notificationclick",
+    (event) => {
+      event.notification.close();
+      if (event.action === "OPEN_PROM") {
+        // User selected the Archive action.
+        clients.openWindow("https://prometheus.apps.microshift.is-in-the.cloud");
+      } if (event.action === "OPEN_GRAFANA") {
+        // User selected the Archive action.
+        clients.openWindow("https://prometheus.apps.microshift.is-in-the.cloud");
+      } else {
+        // User selected (e.g., clicked in) the main body of notification.
+        clients.openWindow("/");
+      }
+    },
+    false,
+  );
+
 });

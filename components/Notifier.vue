@@ -39,8 +39,8 @@ export default {
       try {
         this.$fire.messaging.onMessage((payload) => {
           console.info("Message received : ", payload);
-          console.log(payload.notification.body);
-          this.message = payload.notification;
+          console.log(payload.data);
+          this.message = payload.data;
         });
       } catch (e) {
         console.error("Error : ", e);
