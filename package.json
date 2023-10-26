@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
+      "build-push": "npm run build && podman build -t quay.io/springdo/plant-power:latest --arch=amd64 . && podman push quay.io/springdo/plant-power:latest",
       "dev": "nuxt",
       "build": "nuxt build",
       "start": "nuxt start",

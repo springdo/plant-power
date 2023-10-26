@@ -1,0 +1,31 @@
+{
+    "receiver":  "webhook ",
+    "status":  "firing ",
+    "alerts": [
+     {
+       "status":  "firing ",
+       "labels": [{}],
+       "annotations": [{}],
+       "startsAt":  "2023-10-26T20:42:38.576Z ",
+       "endsAt":  "0001-01-01T00:00:00Z ",
+       "generatorURL":  "http://miflora-prometheus-674c78999f-c5pqv:9090/graph?g0.expr=miflora_primary%7Bresource_type%3D%22moisture%22%7D+%3C+20&g0.tab=1 ",
+       "fingerprint":  "0b196fb4954d2e1b "
+     }
+    ],
+    "groupLabels": {},
+    "commonLabels": {
+     "alertname":  "DryPlants ",
+     "instance":  "hallway ",
+     "job":  "spider_plant ",
+     "resource_type":  "moisture ",
+     "sensor":  "H "
+    },
+    "commonAnnotations": {
+     "DESCRIPTION":  "spider_plant dry plant ",
+     "SUMMARY":  "spider_plant in hallway needs to be watered "
+    },
+    "externalURL":  "http://alertmanager-7bbd497848-h9chx:9093 ",
+    "version":  "4 ",
+    "groupKey":  "{}/{}:{} ",
+    "truncatedAlerts": 0
+  }

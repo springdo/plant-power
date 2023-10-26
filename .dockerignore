@@ -2,3 +2,4 @@ node_modules
 tests
 tasks
 src
+server/secrets

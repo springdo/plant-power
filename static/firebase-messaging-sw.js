@@ -32,36 +32,39 @@ messaging.onBackgroundMessage(function (payload) {
   const notificationTitle = payload.data.title;
   const notificationOptions = {
     body: payload.data.body,
-    actions: [{
-      action: 'OPEN_PROM',
-      title: 'Prometheus'
-    },{
-      action: 'OPEN_GRAFANA',
-      title: 'Grafana'
-    }],
+    // TURNING OFF THE ACTIONS AS THEY SEEM TO JUST WORK ON THE LAPTOP?
+    // actions: [{
+    //   action: 'OPEN_PROM',
+    //   title: 'Prometheus'
+    // },{
+    //   action: 'OPEN_GRAFANA',
+    //   title: 'Grafana'
+    // }],
+    badge: './plant-icon.png',
     icon: './flower-icon.png',
     badge: 'https://plant-power.apps.microshift.is-in-the.cloud/plant.png',
     vibrate: [200, 100, 200, 100, 200, 100, 200],
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
-
-
-  self.addEventListener( "notificationclick",
-    (event) => {
-      event.notification.close();
-      if (event.action === "OPEN_PROM") {
-        // User selected the Archive action.
-        clients.openWindow("https://prometheus.apps.microshift.is-in-the.cloud");
-      } if (event.action === "OPEN_GRAFANA") {
-        // User selected the Archive action.
-        clients.openWindow("https://prometheus.apps.microshift.is-in-the.cloud");
-      } else {
-        // User selected (e.g., clicked in) the main body of notification.
-        clients.openWindow("/");
-      }
-    },
-    false,
-  );
-
 });
+
+self.addEventListener( "notificationclick",
+  (event) => {
+    event.notification.close();
+    console.info("Firebase SW: notificationclick event ::", event)
+    if (event.action === "OPEN_PROM") {
+      console.info("Firebase SW: OPEN_PROM")
+      // User selected the Archive action.
+      clients.openWindow(`/?event=${event.action}`)
+      // windowClient.navigate("https://prometheus.apps.microshift.is-in-the.cloud")
+    } else if (event.action === "OPEN_GRAFANA") {
+      console.info("Firebase SW: OPEN_GRAFANA")
+      // User selected the Archive action.
+      clients.openWindow("https://grafana.apps.microshift.is-in-the.cloud");
+    } else {
+      // User selected (e.g., clicked in) the main body of notification.
+      // clients.openWindow(`/?event=${JSON.stringify(event)}`);
+      clients.openWindow(`/?event=${event.action}`);
+    }
+  },false,);
