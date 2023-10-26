@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: firebase
+data:
+  firebase.json: |-
+    {
+        "type": "service_account",
+    }

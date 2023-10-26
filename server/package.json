@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build-push": "podman build -t quay.io/springdo/plant-server:latest --arch=amd64 . && podman push quay.io/springdo/plant-server:latest"
+    "build-push": "podman build -t quay.io/springdo/plant-server:latest . && podman push quay.io/springdo/plant-server:latest"
   },
   "dependencies": {
     "express": "^4.18.2",
