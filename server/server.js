@@ -38,6 +38,9 @@ app.post('/sendalert', (req, res) => {
     console.info('Alert received ::' , req.body)
     messageTemplate.data.title = `🚰 Thirsty Plant - ${req.body.commonLabels.sensor} 🪴`
     messageTemplate.data.body = `💦🪴 Please water plant ${req.body.commonLabels.sensor} in the ${req.body.commonLabels.instance}`
+    req.body.alerts.map(item => {
+        console.info("ALERT FIRING ::", item );
+    })
     console.info('Sending message to FCM ::' , messageTemplate)
     admin.messaging().sendEachForMulticast(messageTemplate)
     .then((response) => {
