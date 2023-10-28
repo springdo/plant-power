@@ -18,14 +18,7 @@ const registrationTokens = [
 ];
 
 
-const messageTemplate = {
-    tokens: registrationTokens,
-    data: {
-        title: "🚰 Thirsty Plant 🌻",
-        body: "Please water XYZ 212",
-        icon: 'https://plant-power.apps.microshift.is-in-the.cloud/plant.png'
-    }
- };
+
 
 app.use(express.json()); //Used to parse JSON bodies
 
@@ -33,29 +26,41 @@ app.get('/hello', (req, res) => {
     res.send('Hello World!');
 });
 
-app.post('/sendalert', (req, res) => {
+app.post('/sendalert', async (req, res) => {
     // req.body
+    let payload_returns = [];
     console.info('Alert received ::' , req.body)
-    messageTemplate.data.title = `🚰 Thirsty Plant - ${req.body.commonLabels.sensor} 🪴`
-    messageTemplate.data.body = `💦🪴 Please water plant ${req.body.commonLabels.sensor} in the ${req.body.commonLabels.instance}`
-    req.body.alerts.map(item => {
+    const fcm_sent = await req.body.alerts.forEach(item => {
+        let messageTemplate = {
+            tokens: registrationTokens,
+            data: {
+                title: "🚰 Thirsty Plant 🌻",
+                body: "Please water XYZ 212",
+                icon: 'https://plant-power.apps.microshift.is-in-the.cloud/plant.png'
+            }
+         };
         console.info("ALERT FIRING ::", item );
+        messageTemplate.data.title = `🚰 Thirsty Plant - ${item.labels.sensor} 🪴`
+        messageTemplate.data.body = `💦🪴 Please water plant ${item.labels.sensor} in the ${item.labels.instance}`
+        console.info('Sending message to FCM ::' , messageTemplate)
+        // fire and forget #YOLO otherwise have to deal with async nonsense :/
+        admin.messaging().sendEachForMulticast(messageTemplate)
+        // .then((response) => {
+        //     // Response is a message ID string.
+        //     console.info('Successfully sent message:', response);
+        //     payload_returns.push(response)
+        // })
+        // .catch((error) => {
+        //     console.log('Error sending message:', error);
+        //     payload_returns.push(error)
+        //     // res.status(500).send(error);
+        // });
     })
-    console.info('Sending message to FCM ::' , messageTemplate)
-    admin.messaging().sendEachForMulticast(messageTemplate)
-    .then((response) => {
-        // Response is a message ID string.
-        console.info('Successfully sent message:', response);
-        res.send(response);
-    })
-    .catch((error) => {
-        console.log('Error sending message:', error);
-        res.status(500).send(error);
-    });
-
-
-
+    // fcm_sent.then(blah => {
+        res.send(payload_returns);
+    // }) 
 });
+
 app.use('/', express.static('public'))
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
